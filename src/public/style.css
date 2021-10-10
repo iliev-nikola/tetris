@@ -1,0 +1,84 @@
+@import url('http://fonts.cdnfonts.com/css/tetris');
+
+body {
+	padding: 50px 20px;
+	font-family: 'Tetris', sans-serif;
+	background-color: lightsteelblue;
+	text-align: center;
+}
+
+/* HEADER */
+.title {
+	display: flex;
+	align-items: baseline;
+	justify-content: center;
+}
+
+.title-text {
+	margin: 0;
+	font-size: 70px;
+	font-weight: 600;
+}
+
+#logo {
+	width: 50px;
+	height: 50px;
+}
+
+.description {
+	margin: 0 0 20px 0;
+	font-size: 35px;
+}
+
+/* MAIN CONTAINER */
+#main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#mainContainer {
+  border: 2px solid rgb(14, 77, 1);
+  border-radius: 0.6vh;
+  opacity: 0.4;
+  transition: 0.7s all ease;
+}
+
+.row {
+  display: flex;
+}
+
+/* theme */
+.cell {
+  width: 1.3vh;
+  height: 1.3vh;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.empty-cell {
+  background-color: black;
+}
+
+.tetris-cell,
+.new-cell {
+  border: 1px solid rgb(2, 83, 2);
+}
+
+.new-cell {
+  background-color: green;
+}
+
+/* GAME OVER SCREEN */
+#gameOverScreen {
+  position: fixed;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.6vh;
+}
+
+#gameOverScreen > h1 {
+  font-weight: 600;
+  font-size: 2.5vw;
+}

@@ -4,14 +4,33 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Tetris</title>
-	<link rel="stylesheet" href="./src/public/reset.css">
-	<link rel="stylesheet" href="./src/public/style.scss">
+	<link rel="stylesheet" href="./src/public/style.css">
+	<link rel="shortcut icon" href="./src/public/logo/logo.png" type="image/x-icon">
+	<link href="http://fonts.cdnfonts.com/css/tetris" rel="stylesheet">
+	<title>TETRIS</title>
 </head>
 <body>
-	<h1>Tetris</h1>
-	<h2>Kolyo's Edition</h2>
+	<!-- HEADER -->
+	<header class="header">
+		<div class="title">
+			<img src="./src/public/logo/logo.png" alt="tetris logo" id="logo">
+			<h1 class="title-text">TETRIS</h1>
+		</div>
+		<p class="description">Kolyo's edition</p>
+	</header>
+	<!-- MAIN CONTAINER -->
+	<main id="main">
+		<div id="mainContainer"></div>
+		<div id="gameOverScreen">
+			<h1>Game over</h1>
+		</div>
+	</main>
+	<!-- FOOTER -->
+	<footer id="footer">
+		
+	</footer>
 
+	<!-- JAVASCRIPT -->
 	<script src="./src/js/utils.js"></script>
 	<script src="./src/js/constants.js"></script>
 	<script src="./src/js/model.js"></script>
