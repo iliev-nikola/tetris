@@ -8,14 +8,11 @@ const settings = {
 }
 
 let timer;
-let lastDirection;
-let oldCell;
-let gameBox;
+let gameBox = []
 
 // initial position of the snake and first dot
 const middleY = Math.floor(settings.height / 2);
 const middleX = Math.floor(settings.width / 2);
-let snake = [{ x: middleX, y: middleY }, { x: middleX + 1, y: middleY }, { x: middleX + 2, y: middleY }];
 
 const gameModel = (function () {
     function move(direction) {
@@ -76,25 +73,12 @@ const gameModel = (function () {
         lastDirection = direction;
     }
 
-    function placeRandomDot(type) {
-        let randomX = utils.randomize(settings.width);
-        let randomY = utils.randomize(settings.height);
-        while (gameBox[randomY][randomX] !== 0) {
-            randomX = utils.randomize(settings.width);
-            randomY = utils.randomize(settings.height);
-        }
-
-        gameBox[randomY][randomX] = 2;
-        // do that every other time then the initial load of the box
-        if (!type) {
-            const rows = Array.from(MAIN_CONTAINER.children);
-            const cells = Array.from(rows[randomY].children);
-            cells[randomX].className = 'cell new-cell';
-        }
-    }
+    function rotate(el) {
+		el.push(el.shift());
+	}
 
     return {
         move,
-        placeRandomDot
+        rotate
     }
 })();
