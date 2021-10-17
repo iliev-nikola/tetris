@@ -6,7 +6,7 @@ const controller = (() => {
 	GAME_OVER_SCREEN.style.display = 'none';
 	MAIN_CONTAINER.style.opacity = 1;
 	lastDirection = null;
-	let figure = figure1.slice();
+	let figure = figure6.slice();
 	figure.forEach(el => {
 		el.forEach(dot => {
 			dot.x += middleX;
