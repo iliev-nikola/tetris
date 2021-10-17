@@ -1,6 +1,6 @@
 // initial settings of the field
 const settings = {
-    height: 45,
+    height: 50,
     width: 30,
     speed: 150,
     speedCounter: 0,
@@ -15,70 +15,60 @@ const middleY = Math.floor(settings.height / 2);
 const middleX = Math.floor(settings.width / 2);
 
 const gameModel = (function () {
-    function move(direction) {
-        const newCell = {};
-        const { x, y } = snake[0];
-        // change coordinates by the new direction
-        if (direction === 'up') {
-            newCell.x = x;
-            newCell.y = y - 1;
-        } else if (direction === 'right') {
-            newCell.x = x + 1;
-            newCell.y = y;
-        } else if (direction === 'down') {
-            newCell.x = x;
-            newCell.y = y + 1;
-        } else {
-            newCell.x = x - 1;
-            newCell.y = y;
-        }
+    function moveRight(figure) {
+		let currentFigure = figure[0];
+		if (currentFigure[currentFigure.length - 1].y === settings.width - 1) {
+			return;
+		}
 
-        // if reach any border
-        if (newCell.x < 0) {
-            newCell.x = settings.width - 1;
-        } else if (newCell.x > settings.width - 1) {
-            newCell.x = 0;
-        } else if (newCell.y < 0) {
-            newCell.y = settings.height - 1;
-        } else if (newCell.y > settings.height - 1) {
-            newCell.y = 0;
-        }
+		figure.forEach(side => {
+			side.forEach(dot => {
+				if (dot.y < settings.width) {
+					dot.y += 1;
+				}
+			});
+		});
+	}
 
-        // check what next cell contains
-        const nextCellValue = gameBox[newCell.y][newCell.x];
-        if (nextCellValue === 0) {
-            // if it's free
-            oldCell = snake.pop();
-            gameBox[newCell.y][newCell.x] = 1;
-            gameBox[oldCell.y][oldCell.x] = 0;
-        } else if (nextCellValue === 1) {
-            // if it's border or any part of the snake
-            settings.isGameOver = true;
-            clearInterval(timer);
-            GAME_OVER_SCREEN.style.display = 'flex';
-            MAIN_CONTAINER.style.opacity = 0.3;
-            return;
-        } else if (nextCellValue === 2) {
-            // if it's food
-            gameBox[newCell.y][newCell.x] = 1;
-            settings.points += 10;
-            if (LEVEL.value === 'auto-speed-increase' || LEVEL.value === 'border-speed') {
-                settings.speed -= 3;
-            }
-            CURRENT_SCORE.innerHTML = settings.points;
-            placeRandomDot();
-        }
+	function moveLeft(figure) {
+		const currentFigure = figure[0];
+		if (currentFigure[0].y === 0) {
+			return;
+		}
 
-        snake.unshift(newCell);
-        lastDirection = direction;
-    }
+		figure.forEach(side => {
+			side.forEach(dot => {
+				if (dot.y > 0) {
+					dot.y -= 1;
+				}
+			});
+		});
+	}
+
+	function moveDown(figure) {
+		const currentFigure = figure[0];
+		if (currentFigure[0].x === settings.height - 1) {
+			// TODO: make logic for next figure here
+			return;
+		}
+
+		figure.forEach(side => {
+			side.forEach(dot => {
+				if (dot.y < settings.width) {
+					dot.x += 1;
+				}
+			});
+		});
+	}
 
     function rotate(el) {
 		el.push(el.shift());
 	}
 
     return {
-        move,
+		moveLeft,
+        moveRight,
+		moveDown,
         rotate
     }
 })();

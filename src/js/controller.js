@@ -3,13 +3,17 @@ const controller = (() => {
 	clearInterval(timer);
 	timer = null;
 	settings.isGameOver = false;
-	settings.points = 0;
-	settings.speed = 150;
-	settings.speedCounter = 0;
 	GAME_OVER_SCREEN.style.display = 'none';
 	MAIN_CONTAINER.style.opacity = 1;
 	lastDirection = null;
-	let currentElement = figure4.slice();
+	let figure = figure1.slice();
+	figure.forEach(el => {
+		el.forEach(dot => {
+			dot.x += middleX;
+			dot.y += middleY;
+		});
+	});
+
     // Make initial render of the box
     function render() {
 		MAIN_CONTAINER.innerHTML = '';
@@ -31,8 +35,6 @@ const controller = (() => {
                 cell.className = 'cell';
                 if (el === 1) {
 					cell.className += ' tetris-cell';
-                } else if (el === 2) {
-                    cell.className += ' new-cell';
                 } else {
 					cell.className += ' empty-cell';
                 }
@@ -47,8 +49,9 @@ const controller = (() => {
     render();
 
     function placeFigure() {
-        currentElement[0].forEach(el => {
-			gameBox[middleX + el.x][middleY + el.y] = 1;
+		const currentFigure = figure[0];
+        currentFigure.forEach(dot => {
+			gameBox[dot.x][dot.y] = 1;
 		});
     }
 
@@ -58,14 +61,17 @@ const controller = (() => {
         if (e.key === ' ') {
             render();
         } else if (e.key === 'ArrowUp' || e.key === 'w') {
-            gameModel.rotate(currentElement);
+            gameModel.rotate(figure);
 			render();
         } else if (e.key === 'ArrowRight' || e.key === 'd') {
-            
+            gameModel.moveRight(figure);
+			render();
         } else if (e.key === 'ArrowDown' || e.key === 's') {
-            
-        } else if (e.key === 'ArrowLeft' || e.key === 'a') {
-            
+			gameModel.moveDown(figure);
+			render();
+		} else if (e.key === 'ArrowLeft' || e.key === 'a') {
+			gameModel.moveLeft(figure);
+            render();
         }
     });
 })();
