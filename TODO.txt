@@ -1,0 +1,2 @@
+- fix functions for getting most left/right/down dot index
+- add function for checking for full rows to destroy (mark them with different class name to visualize the destroying)

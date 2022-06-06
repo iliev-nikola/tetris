@@ -89,6 +89,7 @@ const controller = (() => {
 				render();
 			} else {
 				currentGameBox = gameBox;
+				// check for rows to destroy
 				newFigure();
 			}
 		}, 400);
@@ -99,7 +100,7 @@ const controller = (() => {
         e.preventDefault();
         if (e.key === ' ') {
 			reset();
-			// start();
+			start();
         } else if (e.key === 'ArrowUp' || e.key === 'w') {
             gameModel.rotate(figure);
 			render();

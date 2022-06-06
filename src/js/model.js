@@ -17,9 +17,15 @@ const middleX = Math.floor(settings.height / 2);
 const gameModel = (() => {
     const moveRight = (figure) => {
 		const currentFigure = figure[0];
+		const mostRightDotIndex = utils.getMostRightDotIndex(currentFigure);
 
 		for (const dot of currentFigure) {
+			// Check if reach the wall
 			if (dot.y === settings.width - 1) {
+				return false;
+			}
+			// Check if reach other element
+			if (dot.y === mostRightDotIndex && gameBox[dot.x][dot.y + 1] === 1) {
 				return false;
 			}
 		}
@@ -33,17 +39,23 @@ const gameModel = (() => {
 		});
 
 		return true;
-	}
+	};
 
 	const moveLeft = (figure) => {
 		const currentFigure = figure[0];
+		const mostLeftDotIndex = utils.getMostLeftDotIndex(currentFigure);
 
 		for (const dot of currentFigure) {
+			// Check if reach the wall
 			if (dot.y === 0) {
 				return false;
 			}
+			// Check if reach other element
+			if (dot.y === mostLeftDotIndex && gameBox[dot.x][dot.y - 1] === 1) {
+				return false;
+			}
 		}
-
+		
 		figure.forEach(side => {
 			side.forEach(dot => {
 				if (dot.y > 0) {
@@ -53,14 +65,19 @@ const gameModel = (() => {
 		});
 
 		return true;
-	}
+	};
 
 	const moveDown = (figure) => {
 		const currentFigure = figure[0];
-		checkNextRow(currentFigure);
+		const mostDownDotIndex = utils.getMostDownDotIndex(currentFigure);
 
 		for (const dot of currentFigure) {
+			// Check if reach the bottom
 			if (dot.x === settings.height - 1) {
+				return false;
+			}
+			// Check if reach other element
+			if (dot.x === mostDownDotIndex && gameBox[dot.x + 1][dot.y] === 1) {
 				return false;
 			}
 		}
@@ -74,34 +91,22 @@ const gameModel = (() => {
 		});
 
 		return true;
-	}
-
-	const checkNextRow = (figure) => {
-		figure.forEach(dot => {
-			console.log(dot)
-		});
-	}
+	};
 
     const rotate = (figure) => {
 		figure.push(figure.shift());
-	}
+	};
 
 	const getRandomFigure = () => {
 		const index = Math.floor(figures.length * Math.random());
 		return JSON.parse(JSON.stringify(figures[index]));
-	}
-
-	const getRandomSide = (figure) => {
-		const index = Math.floor(figure.length * Math.random());
-		return figure[index];
-	}
+	};
 
     return {
 		moveLeft,
         moveRight,
 		moveDown,
         rotate,
-		getRandomFigure,
-		getRandomSide
+		getRandomFigure
     }
 })();
