@@ -1,24 +1,27 @@
-// initial settings of the field
+// Initial settings of the field
 const settings = {
-    height: 50,
-    width: 30,
+    height: 30,
+    width: 20,
     speed: 150,
     speedCounter: 0,
     isGameOver: false,
-}
+};
 
 let timer;
-let gameBox = []
+let gameBox = [];
 
-// initial position of the snake and first dot
-const middleY = Math.floor(settings.height / 2);
-const middleX = Math.floor(settings.width / 2);
+// Starting position of the figure
+const middleY = Math.floor(settings.width / 2);
+const middleX = Math.floor(settings.height / 2);
 
-const gameModel = (function () {
-    function moveRight(figure) {
-		let currentFigure = figure[0];
-		if (currentFigure[currentFigure.length - 1].y === settings.width - 1) {
-			return;
+const gameModel = (() => {
+    const moveRight = (figure) => {
+		const currentFigure = figure[0];
+
+		for (const dot of currentFigure) {
+			if (dot.y === settings.width - 1) {
+				return false;
+			}
 		}
 
 		figure.forEach(side => {
@@ -28,12 +31,17 @@ const gameModel = (function () {
 				}
 			});
 		});
+
+		return true;
 	}
 
-	function moveLeft(figure) {
+	const moveLeft = (figure) => {
 		const currentFigure = figure[0];
-		if (currentFigure[0].y === 0) {
-			return;
+
+		for (const dot of currentFigure) {
+			if (dot.y === 0) {
+				return false;
+			}
 		}
 
 		figure.forEach(side => {
@@ -43,13 +51,18 @@ const gameModel = (function () {
 				}
 			});
 		});
+
+		return true;
 	}
 
-	function moveDown(figure) {
+	const moveDown = (figure) => {
 		const currentFigure = figure[0];
-		if (currentFigure[0].x === settings.height - 1) {
-			// TODO: make logic for next figure here
-			return;
+		checkNextRow(currentFigure);
+
+		for (const dot of currentFigure) {
+			if (dot.x === settings.height - 1) {
+				return false;
+			}
 		}
 
 		figure.forEach(side => {
@@ -59,16 +72,36 @@ const gameModel = (function () {
 				}
 			});
 		});
+
+		return true;
 	}
 
-    function rotate(el) {
-		el.push(el.shift());
+	const checkNextRow = (figure) => {
+		figure.forEach(dot => {
+			console.log(dot)
+		});
+	}
+
+    const rotate = (figure) => {
+		figure.push(figure.shift());
+	}
+
+	const getRandomFigure = () => {
+		const index = Math.floor(figures.length * Math.random());
+		return JSON.parse(JSON.stringify(figures[index]));
+	}
+
+	const getRandomSide = (figure) => {
+		const index = Math.floor(figure.length * Math.random());
+		return figure[index];
 	}
 
     return {
 		moveLeft,
         moveRight,
 		moveDown,
-        rotate
+        rotate,
+		getRandomFigure,
+		getRandomSide
     }
 })();

@@ -1,4 +1,4 @@
-const utils = (function () {
+const utils = (() => {
     function getById(id) {
         return document.getElementById(id);
     }
@@ -10,6 +10,7 @@ const utils = (function () {
     function setBestScore(score) {
         localStorage.setItem('snake', JSON.stringify({ bestScore: score }));
     }
+    
     return {
         getById,
         getBestScore,
