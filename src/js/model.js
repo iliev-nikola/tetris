@@ -15,17 +15,17 @@ const middleY = Math.floor(settings.width / 2);
 const middleX = Math.floor(settings.height / 2);
 
 const gameModel = (() => {
+	// Moving directions
     const moveRight = (figure) => {
 		const currentFigure = figure[0];
-		const mostRightDotIndex = utils.getMostRightDotIndex(currentFigure);
 
-		for (const dot of currentFigure) {
+		for (let dot of currentFigure) {
 			// Check if reach the wall
 			if (dot.y === settings.width - 1) {
 				return false;
 			}
 			// Check if reach other element
-			if (dot.y === mostRightDotIndex && gameBox[dot.x][dot.y + 1] === 1) {
+			if (gameBox[dot.x][dot.y + 1] === 2) {
 				return false;
 			}
 		}
@@ -43,15 +43,14 @@ const gameModel = (() => {
 
 	const moveLeft = (figure) => {
 		const currentFigure = figure[0];
-		const mostLeftDotIndex = utils.getMostLeftDotIndex(currentFigure);
 
-		for (const dot of currentFigure) {
+		for (let dot of currentFigure) {
 			// Check if reach the wall
 			if (dot.y === 0) {
 				return false;
 			}
 			// Check if reach other element
-			if (dot.y === mostLeftDotIndex && gameBox[dot.x][dot.y - 1] === 1) {
+			if (gameBox[dot.x][dot.y - 1] === 2) {
 				return false;
 			}
 		}
@@ -69,15 +68,14 @@ const gameModel = (() => {
 
 	const moveDown = (figure) => {
 		const currentFigure = figure[0];
-		const mostDownDotIndex = utils.getMostDownDotIndex(currentFigure);
 
-		for (const dot of currentFigure) {
+		for (let dot of currentFigure) {
 			// Check if reach the bottom
 			if (dot.x === settings.height - 1) {
 				return false;
 			}
 			// Check if reach other element
-			if (dot.x === mostDownDotIndex && gameBox[dot.x + 1][dot.y] === 1) {
+			if (gameBox[dot.x + 1][dot.y] === 2) {
 				return false;
 			}
 		}

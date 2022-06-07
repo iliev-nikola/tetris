@@ -18,7 +18,13 @@ const controller = (() => {
 				dot.y += middleY;
 			});
 		});
-	}
+	};
+
+	const makeFigureLastMove = () => {
+		currentFigure.forEach(dot => {
+			gameBox[dot.x][dot.y] = 2;
+		});
+    };
 
 	reset();
 
@@ -68,7 +74,7 @@ const controller = (() => {
             row.forEach(el => {
                 const cell = document.createElement('div');
                 cell.className = 'cell';
-                if (el === 1) {
+                if (el === 1 || el === 2) {
 					cell.className += ' tetris-cell';
                 } else {
 					cell.className += ' empty-cell';
@@ -79,7 +85,7 @@ const controller = (() => {
 
             MAIN_CONTAINER.append(newRow);
         });
-    }
+    };
 
     render();
 
@@ -89,6 +95,7 @@ const controller = (() => {
 				render();
 			} else {
 				currentGameBox = gameBox;
+				makeFigureLastMove();
 				// check for rows to destroy
 				newFigure();
 			}
