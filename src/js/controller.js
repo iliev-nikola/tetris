@@ -21,9 +21,16 @@ const controller = (() => {
 	};
 
 	const makeFigureLastMove = () => {
+		let lastRowIndex = 0;
 		currentFigure.forEach(dot => {
+			if (dot.x > lastRowIndex) {
+				lastRowIndex = dot.x;
+			}
+
 			gameBox[dot.x][dot.y] = 2;
 		});
+
+		return lastRowIndex;
     };
 
 	reset();
@@ -95,8 +102,8 @@ const controller = (() => {
 				render();
 			} else {
 				currentGameBox = gameBox;
-				makeFigureLastMove();
-				// check for rows to destroy
+				const lastRowIndex = makeFigureLastMove();
+				utils.checkAndDestroyFullRow(currentGameBox, lastRowIndex);
 				newFigure();
 			}
 		}, 400);

@@ -16,10 +16,35 @@ const middleX = Math.floor(settings.height / 2);
 
 const gameModel = (() => {
 	// Moving directions
+	const moveLeft = (figure) => {
+		const currentFigure = figure[0];
+
+		for (const dot of currentFigure) {
+			// Check if reach the wall
+			if (dot.y <= 0) {
+				return false;
+			}
+			// Check if reach other element
+			if (gameBox[dot.x][dot.y - 1] === 2) {
+				return false;
+			}
+		}
+
+		for (const side of figure) {
+			if (side.some(dot => dot.y - 1 < 0)) {
+				break;
+			}
+
+			side.forEach(dot => dot.y -= 1);
+		}
+
+		return true;
+	};
+
     const moveRight = (figure) => {
 		const currentFigure = figure[0];
 
-		for (let dot of currentFigure) {
+		for (const dot of currentFigure) {
 			// Check if reach the wall
 			if (dot.y === settings.width - 1) {
 				return false;
@@ -30,38 +55,13 @@ const gameModel = (() => {
 			}
 		}
 
-		figure.forEach(side => {
-			side.forEach(dot => {
-				if (dot.y < settings.width) {
-					dot.y += 1;
-				}
-			});
-		});
-
-		return true;
-	};
-
-	const moveLeft = (figure) => {
-		const currentFigure = figure[0];
-
-		for (let dot of currentFigure) {
-			// Check if reach the wall
-			if (dot.y === 0) {
-				return false;
+		for (const side of figure) {
+			if (side.some(dot => dot.y + 1 >= settings.width)) {
+				break;
 			}
-			// Check if reach other element
-			if (gameBox[dot.x][dot.y - 1] === 2) {
-				return false;
-			}
+
+			side.forEach(dot => dot.y += 1);
 		}
-		
-		figure.forEach(side => {
-			side.forEach(dot => {
-				if (dot.y > 0) {
-					dot.y -= 1;
-				}
-			});
-		});
 
 		return true;
 	};
@@ -69,7 +69,7 @@ const gameModel = (() => {
 	const moveDown = (figure) => {
 		const currentFigure = figure[0];
 
-		for (let dot of currentFigure) {
+		for (const dot of currentFigure) {
 			// Check if reach the bottom
 			if (dot.x === settings.height - 1) {
 				return false;
@@ -80,19 +80,31 @@ const gameModel = (() => {
 			}
 		}
 
-		figure.forEach(side => {
-			side.forEach(dot => {
-				if (dot.y < settings.width) {
-					dot.x += 1;
-				}
-			});
-		});
+		for (const side of figure) {
+			if (side.some(dot => dot.x + 1 >= settings.height)) {
+				break;
+			}
+
+			side.forEach(dot => dot.x += 1);
+		}
 
 		return true;
 	};
 
     const rotate = (figure) => {
-		figure.push(figure.shift());
+		if (figure.length > 1 && !isEventuallyTouchOtherFigure(figure[1])) {
+			figure.push(figure.shift());
+		}
+	};
+
+	const isEventuallyTouchOtherFigure = (side) => {
+		for (const dot of side) {
+			if (gameBox[dot.x][dot.y] === 2) {
+				return true;
+			}
+		}
+
+		return false;
 	};
 
 	const getRandomFigure = () => {

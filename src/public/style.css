@@ -50,8 +50,8 @@ body {
 
 /* theme */
 .cell {
-  width: 1.3vh;
-  height: 1.3vh;
+  width: 16px;
+  height: 16px;
   background-color: white;
   box-sizing: border-box;
 }
