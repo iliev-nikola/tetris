@@ -1,1 +1,2 @@
-# tetris
+# Tetris
+## Kolyo's edition
