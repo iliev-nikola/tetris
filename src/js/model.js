@@ -99,6 +99,10 @@ const gameModel = (() => {
 
 	const isEventuallyTouchOtherFigure = (side) => {
 		for (const dot of side) {
+			if (dot.x < 0) {
+				return;
+			}
+
 			if (gameBox[dot.x][dot.y] === 2) {
 				return true;
 			}
