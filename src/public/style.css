@@ -60,13 +60,8 @@ body {
   background-color: black;
 }
 
-.tetris-cell,
-.new-cell {
+.tetris-cell {
   border: 1px solid rgb(2, 83, 2);
-}
-
-.new-cell {
-  background-color: green;
 }
 
 /* GAME OVER SCREEN */

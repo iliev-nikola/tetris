@@ -51,12 +51,25 @@ const utils = (() => {
     }
   };
 
+  const isGameOver = (currentFigure, gameBox) => {
+    for (let i = 0; i < currentFigure.length; i++) {
+      const dot = currentFigure[i];
+
+      if (gameBox[dot.x][dot.y] === 2 || gameBox[dot.x + 1][dot.y] === 2) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   return {
     getById,
     getBestScore,
     setBestScore,
     getRandomSide,
     checkAndDestroyFullRows,
-    moveDownRows
+    moveDownRows,
+    isGameOver
   }
 })();
