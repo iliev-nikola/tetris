@@ -1,4 +1,4 @@
-/* Coordinates schema of all the figures and all of their sides */
+/* Coordinates schemas of all the figures and all of their sides */
 
    //
 //////

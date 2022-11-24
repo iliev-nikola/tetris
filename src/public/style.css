@@ -2,9 +2,9 @@
 
 body {
 	padding: 50px 20px;
+	text-align: center;
 	font-family: 'Tetris', sans-serif;
 	background-color: lightsteelblue;
-	text-align: center;
 }
 
 /* HEADER */
