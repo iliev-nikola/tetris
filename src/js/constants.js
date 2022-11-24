@@ -17,3 +17,12 @@ const LEVEL = utils.getById('level');
 
 // THEME
 const THEME = utils.getById('theme');
+
+// Keys
+const KEYS = {
+	up: 'ArrowUp',
+  down: 'ArrowDown',
+  left: 'ArrowLeft',
+  right: 'ArrowRight',
+  space: ' '
+};

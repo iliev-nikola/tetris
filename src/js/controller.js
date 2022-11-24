@@ -46,6 +46,12 @@ const controller = (() => {
 				dot.y += middleY;
 			});
 		});
+
+    const currentFigure = figure[0];
+
+    if (utils.isGameOver(currentFigure, gameBox)) {
+      gameModel.gameOver();
+    }
 	};
 
 	const placeFigure = () => {
@@ -125,21 +131,22 @@ const controller = (() => {
 	document.body.addEventListener('keydown', (e) => {
 		e.preventDefault();
 
-		if (e.key === ' ') {
+		if (e.key === KEYS.space) {
 			reset();
+      render();
 			start();
-		} else if (e.key === 'ArrowUp' || e.key === 'w') {
+		} else if (e.key === KEYS.up || e.key === 'w') {
 			gameModel.rotate(figure);
 			render();
-		} else if (e.key === 'ArrowRight' || e.key === 'd') {
+		} else if (e.key === KEYS.right || e.key === 'd') {
 			if (gameModel.moveRight(figure)) {
 				render();
 			}
-		} else if (e.key === 'ArrowDown' || e.key === 's') {
+		} else if (e.key === KEYS.down || e.key === 's') {
 			if (gameModel.moveDown(figure)) {
 				render();
 			}
-		} else if (e.key === 'ArrowLeft' || e.key === 'a') {
+		} else if (e.key === KEYS.left || e.key === 'a') {
 			if (gameModel.moveLeft(figure)) {
 				render();
 			}

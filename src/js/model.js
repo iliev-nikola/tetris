@@ -116,11 +116,19 @@ const gameModel = (() => {
 		return JSON.parse(JSON.stringify(figures[index]));
 	};
 
+  const gameOver = () => {
+    clearInterval(timer);
+		settings.isGameOver = true;
+		GAME_OVER_SCREEN.style.display = 'flex';
+		MAIN_CONTAINER.style.opacity = 0.3;
+  };
+
   return {
 		moveLeft,
     moveRight,
 		moveDown,
     rotate,
-		getRandomFigure
+		getRandomFigure,
+    gameOver
   }
 })();
