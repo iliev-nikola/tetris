@@ -1,11 +1,14 @@
 BUGS
-- make function to move the rows down after successful clearance
+-
 
 REFACTOR
 - refactor
 - separate functions between different files properly
+- add proper comments to all of the functions flow
 
 UI
+- add game over logic and screen
+- add speed
 - add a "next element" window
 - add score counter and connect it to local storage
 - fix width and height

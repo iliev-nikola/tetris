@@ -1,10 +1,10 @@
 // Initial settings of the field
 const settings = {
-    height: 30,
-    width: 20,
-    speed: 150,
-    speedCounter: 0,
-    isGameOver: false,
+  height: 30,
+  width: 20,
+  speed: 150,
+  speedCounter: 0,
+  isGameOver: false,
 };
 
 let timer;
@@ -41,7 +41,7 @@ const gameModel = (() => {
 		return true;
 	};
 
-    const moveRight = (figure) => {
+  const moveRight = (figure) => {
 		const currentFigure = figure[0];
 
 		for (const dot of currentFigure) {
@@ -91,7 +91,7 @@ const gameModel = (() => {
 		return true;
 	};
 
-    const rotate = (figure) => {
+  const rotate = (figure) => {
 		if (figure.length > 1 && !isEventuallyTouchOtherFigure(figure[1])) {
 			figure.push(figure.shift());
 		}
@@ -116,11 +116,11 @@ const gameModel = (() => {
 		return JSON.parse(JSON.stringify(figures[index]));
 	};
 
-    return {
+  return {
 		moveLeft,
-        moveRight,
+    moveRight,
 		moveDown,
-        rotate,
+    rotate,
 		getRandomFigure
-    }
+  }
 })();
