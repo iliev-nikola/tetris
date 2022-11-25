@@ -5,6 +5,9 @@ const settings = {
   speed: 150,
   speedCounter: 0,
   isGameOver: false,
+  points: 0,
+  currentBest: 0,
+  userBest: 0
 };
 
 let timer;

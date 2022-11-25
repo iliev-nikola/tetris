@@ -95,6 +95,19 @@ b {
 
 /* SCORE BOARD */
 .score-board {
-  text-align: right;
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  text-align: right;
+}
+
+table th,
+table td {
+  font-family: monospace;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+table td {
+  width: 75px;
 }
