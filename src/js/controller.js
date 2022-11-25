@@ -5,16 +5,40 @@ const controller = (() => {
 	let currentFigure;
   let nextFigure;
 
+  if (localStorage.getItem('tetris')) {
+    const bestScore = utils.getBestScore();
+    USER_BEST.innerHTML = bestScore;
+    settings.userBest = bestScore;
+  } else {
+    utils.setBestScore(0);
+    USER_BEST.innerHTML = 0;
+  }
+
 	const reset = () => {
+    // set points rendering
+    if (settings.points > settings.currentBest) {
+      settings.currentBest = settings.points;
+      CURRENT_BEST.innerHTML = settings.points;
+    }
+
+    if (settings.points > settings.userBest) {
+      settings.userBest = settings.points;
+      utils.setBestScore(settings.points);
+      USER_BEST.innerHTML = settings.userBest;
+    }
+
+    // clear the initial data to start from the beginning
 		clearInterval(timer);
 		timer = null;
 		settings.isGameOver = false;
+    settings.points = 0;
 		currentGameBox = null;
-		GAME_OVER_SCREEN.style.display = 'none';
-		MAIN_CONTAINER.style.opacity = 1;
 		figure = gameModel.getRandomFigure();
     nextFigure = gameModel.getRandomFigure();
     gameModel.showNextElement(nextFigure[0]);
+		GAME_OVER_SCREEN.style.display = 'none';
+		MAIN_CONTAINER.style.opacity = 1;
+    CURRENT_SCORE.innerHTML = settings.points;
 
 		figure.forEach(side => {
 			side.forEach(dot => {
@@ -34,6 +58,9 @@ const controller = (() => {
 			gameBox[dot.x][dot.y] = 2;
 		});
 
+    settings.points += 2;
+    CURRENT_SCORE.innerHTML = settings.points;
+    
 		return lastRowIndex;
 	};
 
@@ -123,7 +150,13 @@ const controller = (() => {
 				const destroyedRows = utils.checkAndDestroyFullRows(currentGameBox, lastRowIndex);
 
 				if (destroyedRows > 0) {
-					utils.moveDownRows(currentGameBox, lastRowIndex, destroyedRows);
+          utils.moveDownRows(currentGameBox, lastRowIndex, destroyedRows);
+
+          for (let i = 0; i < destroyedRows; i++) {
+            settings.points += 20;
+          }
+
+          CURRENT_SCORE.innerHTML = settings.points;
 				}
 
 				newFigure();

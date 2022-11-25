@@ -7,11 +7,12 @@ REFACTOR
 - add proper comments to all of the functions flow
 
 UI
-- add score counter and connect it to local storage
 - add speed
 - fix width and height
+- add description footer with some instructions
 
 DONE
+- add score counter and connect it to local storage
 - add a "next element" window
 - add game over logic and screen
 - when the longest figure (----) touch some wall (or bottom) and then rotate, it two sides are not correctly placed one of other
