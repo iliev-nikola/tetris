@@ -7,12 +7,12 @@ REFACTOR
 - add proper comments to all of the functions flow
 
 UI
-- add speed
-- add a "next element" window
 - add score counter and connect it to local storage
+- add speed
 - fix width and height
 
 DONE
+- add a "next element" window
 - add game over logic and screen
 - when the longest figure (----) touch some wall (or bottom) and then rotate, it two sides are not correctly placed one of other
 - when reaching the bottom and rotate at the last moment, some error appears in the console. Clear it!

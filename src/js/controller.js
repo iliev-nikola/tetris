@@ -3,6 +3,7 @@ const controller = (() => {
 	let currentGameBox;
 	let figure;
 	let currentFigure;
+  let nextFigure;
 
 	const reset = () => {
 		clearInterval(timer);
@@ -12,10 +13,11 @@ const controller = (() => {
 		GAME_OVER_SCREEN.style.display = 'none';
 		MAIN_CONTAINER.style.opacity = 1;
 		figure = gameModel.getRandomFigure();
+    nextFigure = gameModel.getRandomFigure();
+    gameModel.showNextElement(nextFigure[0]);
 
 		figure.forEach(side => {
 			side.forEach(dot => {
-				dot.x += 1;
 				dot.y += middleY;
 			});
 		});
@@ -38,20 +40,22 @@ const controller = (() => {
 	reset();
 
 	const newFigure = () => {
-		figure = gameModel.getRandomFigure();
-
+		figure = nextFigure;
+    
 		figure.forEach(side => {
-			side.forEach(dot => {
-				dot.x += 1;
-				dot.y += middleY;
+      side.forEach(dot => {
+        dot.y += middleY;
 			});
 		});
-
+    
     const currentFigure = figure[0];
-
+    
     if (utils.isGameOver(currentFigure, gameBox)) {
       gameModel.gameOver();
     }
+    
+    nextFigure = gameModel.getRandomFigure();
+    gameModel.showNextElement(nextFigure[0]);
 	};
 
 	const placeFigure = () => {
