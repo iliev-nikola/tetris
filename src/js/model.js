@@ -1,7 +1,7 @@
 // Initial settings of the field
 const settings = {
-  height: 30,
-  width: 20,
+  height: 25,
+  width: 15,
   speed: 150,
   speedCounter: 0,
   isGameOver: false,
@@ -141,7 +141,7 @@ const gameModel = (() => {
       nextElementBox.push(currentRow);
     }
 
-    const moveLeft = element.some(dot => dot.y === 3);
+    const moveLeft = element.some(dot => dot.y === 3 || dot.y === 2);
     const verticalDots = moveLeft ? 1 : 2;
     const moveUp = element.some(dot => dot.x === 3 || dot.x === 2);
     const horizontalDots = moveUp ? 1 : 2;
@@ -157,7 +157,7 @@ const gameModel = (() => {
 
       row.forEach(el => {
         const cell = document.createElement('div');
-        cell.className = 'cell';
+        cell.className = 'cell small-cell';
 
         if (el === 1) {
           cell.className += ' tetris-cell';

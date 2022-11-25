@@ -37,13 +37,14 @@ b {
 
 /* MAIN CONTAINER */
 #main {
+  position: relative;
   display: flex;
   justify-content: center;
   gap: 40px;
 }
 
 #mainContainer {
-  border: 2px solid rgb(14, 77, 1);
+  border: 10px solid rgb(14, 77, 1);
   border-radius: 0.6vh;
   opacity: 0.4;
   transition: 0.7s all ease;
@@ -55,10 +56,15 @@ b {
 
 /* theme */
 .cell {
-  width: 16px;
-  height: 16px;
+  width: 22px;
+  height: 22px;
   background-color: white;
   box-sizing: border-box;
+}
+
+.small-cell {
+  width: 14px;
+  height: 14px;
 }
 
 .empty-cell {
@@ -71,16 +77,17 @@ b {
 
 /* GAME OVER SCREEN */
 #gameOverScreen {
-  position: fixed;
+  position: absolute;
+  top: 35%;
   display: none;
   justify-content: center;
   align-items: center;
-  border-radius: 0.6vh;
+  border-radius: 4px;
 }
 
 #gameOverScreen > h1 {
   font-weight: 600;
-  font-size: 2.5vw;
+  font-size: 45px;
 }
 
 /* NEXT ELEMENT WINDOW */
