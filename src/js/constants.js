@@ -1,6 +1,7 @@
 // MAIN
 const MAIN_CONTAINER = utils.getById('mainContainer');
 const GAME_OVER_SCREEN = utils.getById('gameOverScreen');
+const NEXT_ELEMENT_WINDOW = utils.getById('nextElementWindow');
 
 // SPEED
 const SPEED_UP = utils.getById('speedUpBtn');

@@ -7,6 +7,11 @@ body {
 	background-color: lightsteelblue;
 }
 
+b {
+  font-size: 30px;
+  font-family: monospace;
+}
+
 /* HEADER */
 .title {
 	display: flex;
@@ -34,7 +39,7 @@ body {
 #main {
   display: flex;
   justify-content: center;
-  align-items: center;
+  gap: 40px;
 }
 
 #mainContainer {
@@ -76,4 +81,20 @@ body {
 #gameOverScreen > h1 {
   font-weight: 600;
   font-size: 2.5vw;
+}
+
+/* NEXT ELEMENT WINDOW */
+.next-element-wrapper {
+  width: 100%;
+}
+
+.next-element-wrapper > div {
+  width: fit-content;
+  text-align: center;
+}
+
+/* SCORE BOARD */
+.score-board {
+  text-align: right;
+  width: 100%;
 }
