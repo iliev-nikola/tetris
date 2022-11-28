@@ -11,6 +11,18 @@ const utils = (() => {
     localStorage.setItem('tetris', JSON.stringify({ bestScore: score }));
   };
 
+  const getRandomFigure = () => {
+    const randomFigureIndex = Math.floor(figures.length * Math.random());
+    const randomSideIndex = Math.floor(figures[randomFigureIndex].length * Math.random());
+    let figure = JSON.parse(JSON.stringify(figures[randomFigureIndex]))
+
+    for (let i = 0; i < randomSideIndex; i++) {
+      figure.unshift(figure.pop());
+    }
+
+    return figure;
+  };
+
   const getRandomSide = (figure) => {
     const index = Math.floor(figure.length * Math.random());
     return figure[index];
@@ -20,15 +32,17 @@ const utils = (() => {
     let destroyedRows = 0;
 
     for (let row = lastRowIndex; row >= 0; row--) {
-      if (!gameBox[row].includes(1) && !gameBox[row].includes(2)) {
-        break;
-      }
+      const currentRow = gameBox[row];
 
-      if (gameBox[row].includes(0)) {
+      if (currentRow.includes(0)) {
         continue;
       }
 
-      gameBox[row].map((el, col) => gameBox[row][col] = 0);
+      if (!currentRow.includes(1) && !currentRow.includes(2)) {
+        break;
+      }
+
+      currentRow.map((el, col) => currentRow[col] = 0);
       destroyedRows++;
     }
 
@@ -67,6 +81,7 @@ const utils = (() => {
     getById,
     getBestScore,
     setBestScore,
+    getRandomFigure,
     getRandomSide,
     checkAndDestroyFullRows,
     moveDownRows,
