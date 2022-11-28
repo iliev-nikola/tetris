@@ -1,15 +1,15 @@
 @import url('http://fonts.cdnfonts.com/css/tetris');
 
 body {
-	padding: 50px 20px;
+  padding-top: 2%;
+	background-color: lightsteelblue;
 	text-align: center;
 	font-family: 'Tetris', sans-serif;
-	background-color: lightsteelblue;
+  pointer-events: none;
 }
 
 b {
   font-size: 30px;
-  font-family: monospace;
 }
 
 /* HEADER */
@@ -35,6 +35,24 @@ b {
 	font-size: 35px;
 }
 
+/* LEFT SIDE */
+.score-board {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: right;
+}
+
+table th,
+table td {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+table td {
+  width: 70px;
+}
+
 /* MAIN CONTAINER */
 #main {
   position: relative;
@@ -44,7 +62,7 @@ b {
 }
 
 #mainContainer {
-  border: 10px solid rgb(14, 77, 1);
+  border: 10px solid grey;
   border-radius: 0.6vh;
   opacity: 0.4;
   transition: 0.7s all ease;
@@ -76,12 +94,11 @@ b {
 }
 
 /* GAME OVER SCREEN */
-#gameOverScreen {
+#gameOverScreen,
+#startScreen {
   position: absolute;
-  top: 35%;
+  top: 40%;
   display: none;
-  justify-content: center;
-  align-items: center;
   border-radius: 4px;
 }
 
@@ -90,31 +107,58 @@ b {
   font-size: 45px;
 }
 
-/* NEXT ELEMENT WINDOW */
-.next-element-wrapper {
-  width: 100%;
+#startScreen {
+  top: 43%;
 }
 
-.next-element-wrapper > div {
-  width: fit-content;
-  text-align: center;
+#startScreen > h1 {
+  color: white;
+  font-weight: 600;
+  font-size: 24px;
 }
 
-/* SCORE BOARD */
-.score-board {
+/* RIGHT SIDE */
+.right-side-wrapper {
+  position: relative;
   display: flex;
-  flex-direction: column;
   width: 100%;
-  text-align: right;
 }
 
-table th,
-table td {
-  font-family: monospace;
+.speed-wrapper p {
+  margin: 0;
   font-size: 20px;
   font-weight: 600;
 }
 
-table td {
-  width: 75px;
+.speed-wrapper label {
+  position: absolute;
+  left: 23px;
+  top: 50px;
+  font-size: 20px;
+  writing-mode: vertical-lr;
+}
+
+#speedInput {
+  width: 30px;
+  outline: none;
+  appearance: slider-vertical;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.next-element-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  margin-left: 35px;
+}
+
+.tetris-cell-next {
+  background-color: black;
+  border: 1px solid lightsteelblue;
+}
+
+.empty-cell-next {
+  background-color: lightsteelblue;
 }

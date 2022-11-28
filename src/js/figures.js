@@ -46,5 +46,19 @@ const figure6 = [
 const figure7 = [
 	[{x: 1, y: 0}, {x: 1, y: 1}, {x: 0, y: 0}, {x: 0, y: 1}]
 ];
+   //
+//////
+ //
+const figure8 = [
+	[{x: 1, y: 0}, {x: 0, y: 1}, {x: 1, y: 1}, {x: 2, y: 1}, {x: 1, y: 2}]
+];
+ //
+////
+const figure9 = [
+	[{x: 0, y: 1}, {x: 1, y: 1}, {x: 1, y: 2}],
+	[{x: 1, y: 1}, {x: 1, y: 2}, {x: 2, y: 1}],
+	[{x: 1, y: 0}, {x: 1, y: 1}, {x: 2, y: 1}],
+	[{x: 1, y: 0}, {x: 1, y: 1}, {x: 0, y: 1}]
+];
 
-const figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7];
+const figures = [figure1, figure2, figure3, figure4, figure5, figure6, figure7, figure8, figure9];
