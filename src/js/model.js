@@ -1,20 +1,9 @@
 // Initial settings of the field
-const settings = {
-  height: 25,
-  width: 15,
-  speed: 150,
-  speedCounter: 0,
-  isGameOver: false,
-  points: 0,
-  currentBest: 0,
-  userBest: 0
-};
-
 let timer;
 let gameBox = [];
 
 // Starting position of the figure
-const middleY = Math.floor(settings.width / 2) - 1;
+const middleY = Math.floor(SETTINGS.width / 2) - 1;
 
 const gameModel = (() => {
   // Moving directions
@@ -48,7 +37,7 @@ const gameModel = (() => {
 
     for (const dot of currentFigure) {
       // Check if reach the wall
-      if (dot.y === settings.width - 1) {
+      if (dot.y === SETTINGS.width - 1) {
         return false;
       }
       // Check if reach other element
@@ -58,7 +47,7 @@ const gameModel = (() => {
     }
 
     for (const side of figure) {
-      if (side.some(dot => dot.y + 1 >= settings.width)) {
+      if (side.some(dot => dot.y + 1 >= SETTINGS.width)) {
         break;
       }
 
@@ -73,7 +62,7 @@ const gameModel = (() => {
 
     for (const dot of currentFigure) {
       // Check if reach the bottom
-      if (dot.x === settings.height - 1) {
+      if (dot.x === SETTINGS.height - 1) {
         return false;
       }
       // Check if reach other element
@@ -83,7 +72,7 @@ const gameModel = (() => {
     }
 
     for (const side of figure) {
-      if (side.some(dot => dot.x + 1 >= settings.height)) {
+      if (side.some(dot => dot.x + 1 >= SETTINGS.height)) {
         break;
       }
 
@@ -113,21 +102,10 @@ const gameModel = (() => {
     return false;
   };
 
-  const getRandomFigure = () => {
-    const randomFigureIndex = Math.floor(figures.length * Math.random());
-    const randomSideIndex = Math.floor(figures[randomFigureIndex].length * Math.random());
-    let figure = JSON.parse(JSON.stringify(figures[randomFigureIndex]))
-
-    for (let i = 0; i < randomSideIndex; i++) {
-      figure.unshift(figure.pop());
-    }
-
-    return figure;
-  };
-
   const gameOver = () => {
     clearInterval(timer);
-    settings.isGameOver = true;
+    timer = null;
+    SETTINGS.isGameOver = true;
     GAME_OVER_SCREEN.style.display = 'flex';
     MAIN_CONTAINER.style.opacity = 0.3;
   };
@@ -137,10 +115,11 @@ const gameModel = (() => {
     const nextElementBox = [];
 
     for (let row = 0; row < 6; row++) {
-      const currentRow = arr = new Array(6).fill(0);
+      const currentRow = new Array(6).fill(0);
       nextElementBox.push(currentRow);
     }
 
+    // Find the middle of the next element box depends of the concrete figure
     const moveLeft = element.some(dot => dot.y === 3 || dot.y === 2);
     const verticalDots = moveLeft ? 1 : 2;
     const moveUp = element.some(dot => dot.x === 3 || dot.x === 2);
@@ -160,9 +139,9 @@ const gameModel = (() => {
         cell.className = 'cell small-cell';
 
         if (el === 1) {
-          cell.className += ' tetris-cell';
+          cell.className += ' tetris-cell-next';
         } else {
-          cell.className += ' empty-cell';
+          cell.className += ' empty-cell-next';
         }
 
         newRow.append(cell);
@@ -177,7 +156,6 @@ const gameModel = (() => {
     moveRight,
     moveDown,
     rotate,
-    getRandomFigure,
     gameOver,
     showNextElement
   }
