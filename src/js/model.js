@@ -106,7 +106,8 @@ const gameModel = (() => {
     clearInterval(timer);
     timer = null;
     SETTINGS.isGameOver = true;
-    GAME_OVER_SCREEN.style.display = 'flex';
+    GAME_OVER_SCREEN.style.display = 'block';
+    CURRENT_SCORE_MOBILE.innerHTML = SETTINGS.points;
     MAIN_CONTAINER.style.opacity = 0.3;
   };
 

@@ -77,6 +77,10 @@ const utils = (() => {
     return false;
   };
 
+  const getTouches = (event) => {
+    return event.touches || event.originalEvent.touches;
+  };
+
   return {
     getById,
     getBestScore,
@@ -85,6 +89,7 @@ const utils = (() => {
     getRandomSide,
     checkAndDestroyFullRows,
     moveDownRows,
-    isGameOver
+    isGameOver,
+    getTouches
   }
 })();

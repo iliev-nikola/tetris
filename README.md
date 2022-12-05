@@ -13,9 +13,8 @@
 
 - Change game speed any time
 - Left-handed compatibility (WASD keys)
+- Mobile devices compatibility (swipe)
 - Store current/current best/user's best score
-
->Cannot be played with a mobile device yet
 
 ### Screenshots:
 

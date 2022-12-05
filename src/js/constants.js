@@ -3,12 +3,14 @@ const MAIN_CONTAINER = utils.getById('mainContainer');
 const GAME_OVER_SCREEN = utils.getById('gameOverScreen');
 const START_SCREEN = utils.getById('startScreen');
 const NEXT_ELEMENT_WINDOW = utils.getById('nextElementWindow');
+const HEADER_LOGO = utils.getById('logo');
 
 // SPEED
 const SPEED_INPUT = utils.getById('speedInput');
 
 // SCORE
 const CURRENT_SCORE = utils.getById('currentScore');
+const CURRENT_SCORE_MOBILE = utils.getById('currentScoreMobile');
 const CURRENT_BEST = utils.getById('currentBest');
 const USER_BEST = utils.getById('userBest');
 
@@ -19,7 +21,11 @@ const KEYS = {
   left: 'ArrowLeft',
   right: 'ArrowRight',
   space: ' ',
-  escape: 'Escape'
+  escape: 'Escape',
+  w: 'w',
+  a: 'a',
+  s: 's',
+  d: 'd'
 };
 
 // SETTINGS
