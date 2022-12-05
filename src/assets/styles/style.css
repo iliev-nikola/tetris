@@ -105,16 +105,26 @@ table td {
 #gameOverScreen > h1 {
   font-weight: 600;
   font-size: 45px;
+  margin-bottom: 0;
+}
+
+#gameOverScreen > h2 {
+  display: none;
+  margin: 0;
 }
 
 #startScreen {
   top: 43%;
 }
 
-#startScreen > h1 {
+.small {
+  display: none;
+}
+
+#startScreen {
   color: white;
   font-weight: 600;
-  font-size: 24px;
+  font-size: small;
 }
 
 /* RIGHT SIDE */
@@ -161,4 +171,42 @@ table td {
 
 .empty-cell-next {
   background-color: lightsteelblue;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    overflow: hidden;
+    pointer-events: auto;
+  }
+
+  .large {
+    display: none;
+  }
+
+  .small {
+    display: block;
+  }
+
+  #logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .title-text {
+    font-size: 45px;
+  }
+
+  .description {
+    margin-bottom: 8px;
+    font-size: 22px;
+  }
+
+  .score-board,
+  .right-side-wrapper {
+    display: none;
+  }
+
+  #gameOverScreen > h2 {
+    display: block;
+  }
 }
