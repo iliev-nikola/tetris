@@ -1,6 +1,6 @@
 const controller = (() => {
   START_SCREEN.style.display = 'block';
-	let currentGameBox, figure, currentFigure, nextFigure;
+  let currentGameBox, figure, currentFigure, nextFigure, xDown, yDown;
 
   if (localStorage.getItem('tetris')) {
     const bestScore = utils.getBestScore();
@@ -11,7 +11,7 @@ const controller = (() => {
     USER_BEST.innerHTML = 0;
   }
 
-	const reset = () => {
+  const reset = () => {
     START_SCREEN.style.display = 'block';
     // set points rendering
     if (SETTINGS.points > SETTINGS.currentBest) {
@@ -26,131 +26,132 @@ const controller = (() => {
     }
 
     // clear the initial data to start from the beginning
-		clearInterval(timer);
-		timer = null;
-		currentGameBox = null;
-		SETTINGS.isGameOver = false;
+    clearInterval(timer);
+    timer = null;
+    currentGameBox = null;
+    SETTINGS.isGameOver = false;
     SETTINGS.points = 0;
-		figure = utils.getRandomFigure();
+    figure = utils.getRandomFigure();
     nextFigure = utils.getRandomFigure();
     gameModel.showNextElement(nextFigure[0]);
-		GAME_OVER_SCREEN.style.display = 'none';
-		MAIN_CONTAINER.style.opacity = 1;
+    GAME_OVER_SCREEN.style.display = 'none';
+    MAIN_CONTAINER.style.opacity = 1;
     CURRENT_SCORE.innerHTML = SETTINGS.points;
+    CURRENT_SCORE_MOBILE.innerHTML = SETTINGS.points;
 
-		figure.forEach(side => {
-			side.forEach(dot => {
-				dot.y += middleY;
-			});
-		});
-	};
+    figure.forEach(side => {
+      side.forEach(dot => {
+        dot.y += middleY;
+      });
+    });
+  };
 
-	reset();
+  reset();
 
-	const makeFigureLastMove = () => {
-		let lastRowIndex = 0;
+  const makeFigureLastMove = () => {
+    let lastRowIndex = 0;
 
-		currentFigure.forEach(dot => {
-			if (dot.x > lastRowIndex) {
-				lastRowIndex = dot.x;
-			}
+    currentFigure.forEach(dot => {
+      if (dot.x > lastRowIndex) {
+        lastRowIndex = dot.x;
+      }
 
-			gameBox[dot.x][dot.y] = 2;
-		});
+      gameBox[dot.x][dot.y] = 2;
+    });
 
     SETTINGS.points += 2;
     CURRENT_SCORE.innerHTML = SETTINGS.points;
-    
-		return lastRowIndex;
-	};
 
-	const newFigure = () => {
-		figure = nextFigure;
-    
-		figure.forEach(side => {
+    return lastRowIndex;
+  };
+
+  const newFigure = () => {
+    figure = nextFigure;
+
+    figure.forEach(side => {
       side.forEach(dot => {
         dot.y += middleY;
-			});
-		});
-    
+      });
+    });
+
     const currentFigure = figure[0];
-    
+
     if (utils.isGameOver(currentFigure, gameBox)) {
       gameModel.gameOver();
       return;
     }
-    
+
     nextFigure = utils.getRandomFigure();
     gameModel.showNextElement(nextFigure[0]);
-	};
+  };
 
-	const placeFigure = () => {
-		currentFigure = figure[0];
+  const placeFigure = () => {
+    currentFigure = figure[0];
 
-		currentFigure.forEach(dot => {
-			gameBox[dot.x][dot.y] = 1;
-		});
-	};
+    currentFigure.forEach(dot => {
+      gameBox[dot.x][dot.y] = 1;
+    });
+  };
 
-	// Render the whole tetris box
-	const render = () => {
-		MAIN_CONTAINER.innerHTML = '';
+  // Render the whole tetris box
+  const render = () => {
+    MAIN_CONTAINER.innerHTML = '';
 
-		// make game field
-		gameBox = [];
+    // make game field
+    gameBox = [];
 
-		for (let row = 0; row < SETTINGS.height; row++) {
-			let arr = [];
+    for (let row = 0; row < SETTINGS.height; row++) {
+      let arr = [];
 
-			if (!currentGameBox) {
-				arr = new Array(SETTINGS.width).fill(0);
-			} else {
-				for (let col = 0; col < SETTINGS.width; col++) {
-					arr[col] = currentGameBox[row][col];
-				}
-			}
+      if (!currentGameBox) {
+        arr = new Array(SETTINGS.width).fill(0);
+      } else {
+        for (let col = 0; col < SETTINGS.width; col++) {
+          arr[col] = currentGameBox[row][col];
+        }
+      }
 
-			gameBox.push(arr);
-		}
+      gameBox.push(arr);
+    }
 
-		placeFigure();
+    placeFigure();
 
-		// render
-		gameBox.forEach(row => {
-			const newRow = document.createElement('div');
-			newRow.className = 'row';
+    // render
+    gameBox.forEach(row => {
+      const newRow = document.createElement('div');
+      newRow.className = 'row';
 
-			row.forEach(el => {
-				const cell = document.createElement('div');
-				cell.className = 'cell';
+      row.forEach(el => {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
 
-				if (el === 1 || el === 2) {
-					cell.className += ' tetris-cell';
-				} else {
-					cell.className += ' empty-cell';
-				}
+        if (el === 1 || el === 2) {
+          cell.className += ' tetris-cell';
+        } else {
+          cell.className += ' empty-cell';
+        }
 
-				newRow.append(cell);
-			});
+        newRow.append(cell);
+      });
 
-			MAIN_CONTAINER.append(newRow);
-		});
-	};
+      MAIN_CONTAINER.append(newRow);
+    });
+  };
 
-	render();
+  render();
 
-	const start = () => {
+  const start = () => {
     START_SCREEN.style.display = 'none';
 
-		timer = setInterval(() => {
-			if (gameModel.moveDown(figure)) {
-				render();
-			} else {
-				currentGameBox = gameBox;
-				const lastRowIndex = makeFigureLastMove();
-				const destroyedRows = utils.checkAndDestroyFullRows(currentGameBox, lastRowIndex);
+    timer = setInterval(() => {
+      if (gameModel.moveDown(figure)) {
+        render();
+      } else {
+        currentGameBox = gameBox;
+        const lastRowIndex = makeFigureLastMove();
+        const destroyedRows = utils.checkAndDestroyFullRows(currentGameBox, lastRowIndex);
 
-				if (destroyedRows > 0) {
+        if (destroyedRows > 0) {
           utils.moveDownRows(currentGameBox, lastRowIndex, destroyedRows);
 
           for (let i = 0; i < destroyedRows; i++) {
@@ -161,49 +162,99 @@ const controller = (() => {
           }
 
           CURRENT_SCORE.innerHTML = SETTINGS.points;
-				}
+        }
 
-				newFigure();
-			}
-		}, 400 - SETTINGS.speed);
-	};
+        newFigure();
+      }
+    }, 400 - SETTINGS.speed);
+  };
 
-	// EVENT LISTENERS
-	document.body.addEventListener('keydown', (e) => {
-		e.preventDefault();
+  const handleTouchStart = (event) => {
+    const firstTouch = utils.getTouches(event)[0];
+    xDown = firstTouch.clientX;
+    yDown = firstTouch.clientY;
+  };
 
-		if (e.key === KEYS.space) {
-			reset();
+  const handleTouchMove = (event) => {
+    if (!xDown || !yDown || SETTINGS.isGameOver || !timer) {
+      return;
+    }
+
+    const xUp = event.touches[0].clientX;
+    const yUp = event.touches[0].clientY;
+
+    const xDiff = xDown - xUp;
+    const yDiff = yDown - yUp;
+
+
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+      if (xDiff > 0) {
+        /* right swipe */
+        if (gameModel.moveRight(figure)) {
+          render();
+        }
+      } else {
+        /* left swipe */
+        if (gameModel.moveLeft(figure)) {
+          render();
+        }
+      }
+    } else {
+      if (yDiff > 0) {
+        /* down swipe */
+        if (gameModel.moveDown(figure)) {
+          render();
+        }
+      } else {
+        /* up swipe */
+        gameModel.rotate(figure);
+        render();
+      }
+    }
+    /* reset values */
+    xDown = null;
+    yDown = null;
+  };
+
+  // EVENT LISTENERS
+  document.body.addEventListener('keydown', (e) => {
+    e.preventDefault();
+
+    if (e.key === KEYS.space) {
+      reset();
       render();
       start();
-		} else if (e.key === KEYS.escape) {
+    } else if (e.key === KEYS.escape) {
       reset();
       render();
       SETTINGS.speed = 0;
       SPEED_INPUT.value = 0;
     }
-    
+
     if (SETTINGS.isGameOver || !timer) {
       return;
     }
 
-    if (e.key === KEYS.up || e.key === 'w') {
-			gameModel.rotate(figure);
-			render();
-		} else if (e.key === KEYS.right || e.key === 'd') {
-			if (gameModel.moveRight(figure)) {
-				render();
-			}
-		} else if (e.key === KEYS.down || e.key === 's') {
-			if (gameModel.moveDown(figure)) {
-				render();
-			}
-		} else if (e.key === KEYS.left || e.key === 'a') {
-			if (gameModel.moveLeft(figure)) {
-				render();
-			}
-		}
-	});
+    if (e.key === KEYS.up || e.key === KEYS.w) {
+      gameModel.rotate(figure);
+      render();
+    } else if (e.key === KEYS.right || e.key === KEYS.d) {
+      if (gameModel.moveRight(figure)) {
+        render();
+      }
+    } else if (e.key === KEYS.down || e.key === KEYS.s) {
+      if (gameModel.moveDown(figure)) {
+        render();
+      }
+    } else if (e.key === KEYS.left || e.key === KEYS.a) {
+      if (gameModel.moveLeft(figure)) {
+        render();
+      }
+    }
+  });
+
+  document.addEventListener('touchstart', handleTouchStart, false);
+  document.addEventListener('touchmove', handleTouchMove, false);
 
   SPEED_INPUT.addEventListener('change', (e) => {
     SETTINGS.speed = e.target.value * 3.5;
@@ -211,8 +262,21 @@ const controller = (() => {
     if (SETTINGS.isGameOver || !timer) {
       return;
     }
-    
+
     clearInterval(timer);
     start()
+  });
+
+  START_SCREEN.addEventListener('click', () => {
+    reset();
+    render();
+    start();
+  });
+
+  HEADER_LOGO.addEventListener('click', () => {
+    reset();
+    render();
+    SETTINGS.speed = 0;
+    SPEED_INPUT.value = 0;
   });
 })();
