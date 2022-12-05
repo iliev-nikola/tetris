@@ -189,26 +189,26 @@ const controller = (() => {
 
     if (Math.abs(xDiff) > Math.abs(yDiff)) {
       if (xDiff > 0) {
-        /* right swipe */
-        if (gameModel.moveRight(figure)) {
+        /* left swipe */
+        if (gameModel.moveLeft(figure)) {
           render();
         }
       } else {
-        /* left swipe */
-        if (gameModel.moveLeft(figure)) {
+        /* right swipe */
+        if (gameModel.moveRight(figure)) {
           render();
         }
       }
     } else {
       if (yDiff > 0) {
+        /* up swipe */
+        gameModel.rotate(figure);
+        render();
+      } else {
         /* down swipe */
         if (gameModel.moveDown(figure)) {
           render();
         }
-      } else {
-        /* up swipe */
-        gameModel.rotate(figure);
-        render();
       }
     }
     /* reset values */
